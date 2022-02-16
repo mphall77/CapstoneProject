@@ -25,29 +25,29 @@ const API = apiURL();
 function App() {
 	const currentUser = useAuth();
 	const [chefs, setChefs] = useState([]);
-	const [starRatings, setStarRatings] = useState([])
-	const [ratingAverage, setRatingAverage] = useState([])
-
+	// const [starRatings, setStarRatings] = useState([]);
+	// const [ratingAverage, setRatingAverage] = useState([]);
 
 	useEffect(() => {
 		const fetchAllChefs = async () => {
 			try {
 				let res = await axios.get(`${API}/users/chefs`);
+				console.log("RES", res);
 				setChefs(res.data.payload);
 			} catch (err) {
 				return err;
 			}
 		};
-const fetchAllRatings = async () => {
-	try {
-		const getRatings = await axios.get(`${API}/ratings`);
-		const getAverage = await axios.get(`${API}/ratings/allAverage`);
-		setStarRatings(getRatings.data.payload)
-		setRatingAverage(getAverage.data.payload)
-	} catch (err){}
-}
+		// const fetchAllRatings = async () => {
+		// 	try {
+		// 		const getRatings = await axios.get(`${API}/ratings`);
+		// 		const getAverage = await axios.get(`${API}/ratings/allAverage`);
+		// 		setStarRatings(getRatings.data.payload);
+		// 		setRatingAverage(getAverage.data.payload);
+		// 	} catch (err) {}
+		// };
 		fetchAllChefs();
-		fetchAllRatings();
+		// fetchAllRatings();
 	}, []);
 
 	return (
@@ -66,15 +66,22 @@ const fetchAllRatings = async () => {
 
 						{/* /users/chefs */}
 						<Route exact path="/chefs">
-							<Index chefs={chefs} starRatings={starRatings} ratingAverage={ratingAverage}/>
+							<Index chefs={chefs} />
+							{/* <Index
+								chefs={chefs}
+								starRatings={starRatings}
+								ratingAverage={ratingAverage}
+							/> */}
 						</Route>
 						<Route exact path="/chefs/:id">
-							<Show chefs={chefs} starRatings={starRatings}/>
+							<Show chefs={chefs} />
+							{/* <Show chefs={chefs} starRatings={starRatings} /> */}
 						</Route>
 
 						{/* /bookings */}
 						<Route exact path="/users/:user_id/bookings">
-							<IndexBookings starRatings={starRatings} />
+							<IndexBookings />
+							{/* <IndexBookings starRatings={starRatings} /> */}
 						</Route>
 						<Route exact path="/chefs/:chef_id/bookings/new">
 							<NewBooking />
